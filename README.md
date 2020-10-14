@@ -5,7 +5,9 @@ Welcome to Sorting Algorithms Visualiser! I built this after watching some video
 # Supported algorithms:
 - Selection sort
 - Bubble sort
+- Comb sort
 - Quick sort
+- Stooge sort
 
 # Requirements
 - python3.6 or above

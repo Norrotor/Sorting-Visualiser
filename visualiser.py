@@ -99,7 +99,9 @@ def main():
     algorithms = {
         "selection": sa.SelectionSort(),
         "bubble": sa.BubbleSort(),
+        "comb": sa.CombSort(),
         "quick": sa.QuickSort(),
+        "stooge": sa.StoogeSort(),
     }
 
     parser = argparse.ArgumentParser()

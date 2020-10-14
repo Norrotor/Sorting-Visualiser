@@ -80,6 +80,34 @@ class BubbleSort(SortingAlgorithm):
                 break
 
 
+class CombSort(SortingAlgorithm):
+    """Comb sort implementation."""
+
+    def __init__(self) -> None:
+        super().__init__()
+
+    def algorithm(self) -> None:
+        gap = self.get_next_gap(len(self.array))
+        swap_occurred = True  # Initialize to True so loop runs at least once
+        while gap != 1 or swap_occurred:
+            swap_occurred = False
+            for i in range(len(self.array) - gap):
+                if self.array[i] > self.array[i + gap]:
+                    self.array[i], self.array[i + gap] = self.array[i + gap], self.array[i]
+                    self.update_window(i, i + gap)
+                    swap_occurred = True
+            gap = self.get_next_gap(gap)
+
+    @staticmethod
+    def get_next_gap(gap) -> int:
+        """Shrink given gap by a shrink factor of 1.3 and return the result."""
+
+        gap = int(gap // 1.3)
+        if gap < 1:
+            return 1
+        return gap
+
+
 class QuickSort(SortingAlgorithm):
     """Quick sort implementation."""
 
@@ -126,4 +154,39 @@ class QuickSort(SortingAlgorithm):
         array[start], array[upper] = array[upper], array[start]
         self.update_window(start, upper)
         return upper
+
+
+class StoogeSort(SortingAlgorithm):
+    """Stooge sort implementation."""
+
+    def __init__(self) -> None:
+        super().__init__()
+
+    def algorithm(self) -> None:
+        self.stooge_sort(self.array)
+
+    def stooge_sort(self, array: List[int], low: int = None, high: int = None) -> None:
+        if low is None:
+            low = 0
+        if high is None:
+            high = len(array) - 1
+
+        if low >= high:
+            return
+
+        if array[low] > array[high]:
+            array[low], array[high] = array[high], array[low]
+            self.update_window(low, high)
+
+        if high - low + 1 > 2:  # More than 2 elements in array
+            index = int((high - low + 1) / 3)
+
+            # Recursively sort first 2 / 3 elements
+            self.stooge_sort(self.array, low, (high - index))
+
+            # Recursively sort last 2 / 3 elements
+            self.stooge_sort(self.array, low + index, high)
+
+            # Recursively sort first 2 / 3 elements again, to confirm they're sorted
+            self.stooge_sort(self.array, low, (high - index))
 
